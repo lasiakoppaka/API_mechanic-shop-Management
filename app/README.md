@@ -45,43 +45,22 @@ mechanic_shop_api/
 
 ## Setup Instructions
 
-### Prerequisites
-
-- Python 3.11+
-- MySQL Server
-- MySQL Workbench (optional)
-
-### Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/YourUsername/mechanic_shop_api.git
-cd mechanic_shop_api
-```
-
-2. Create and activate virtual environment:
-```bash
-python3 -m venv venv
-source venv/bin/activate  # On Mac/Linux
-# venv\Scripts\activate   # On Windows
-```
-
-3. Install dependencies:
+1. Install dependencies:
 ```bash
 pip install flask flask-sqlalchemy mysql-connector-python flask-marshmallow marshmallow-sqlalchemy
 ```
 
-4. Create MySQL database:
+2. Create MySQL database:
 ```sql
 CREATE DATABASE mechanic_shop;
 ```
 
-5. Update database credentials in `app/__init__.py`:
+3. Update database credentials in `app/__init__.py`:
 ```python
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:YOUR_PASSWORD@localhost/mechanic_shop'
 ```
 
-6. Run the application:
+4. Run the application:
 ```bash
 python3 run.py
 ```
@@ -152,76 +131,3 @@ The API will be available at `http://127.0.0.1:5000`
 Lasia Koppaka
 ```
 
-**Save the file** (Cmd + S)
-
----
-
-## **STEP 3: Create .gitignore File**
-
-Create a `.gitignore` file to exclude unnecessary files from Git:
-
-In VS Code, create `.gitignore` in the project root and paste:
-```
-# Virtual Environment
-venv/
-env/
-ENV/
-
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Database
-*.db
-*.sqlite
-*.sqlite3
-
-# Environment variables
-.env
-```
-
-**Save the file**
-
----
-
-## **STEP 4: Verify Your Final Project Structure**
-
-Your project should look like this:
-```
-mechanic_shop_api/
-├── app/
-│   ├── __init__.py
-│   ├── models.py
-│   └── blueprints/
-│       ├── __init__.py
-│       ├── customers/
-│       │   ├── __init__.py
-│       │   ├── routes.py
-│       │   └── schemas.py
-│       ├── mechanics/
-│       │   ├── __init__.py
-│       │   ├── routes.py
-│       │   └── schemas.py
-│       └── service_tickets/
-│           ├── __init__.py
-│           ├── routes.py
-│           └── schemas.py
-├── venv/ (don't commit this)
-├── app.py (old file - can keep for reference)
-├── run.py
-├── README.md
-├── .gitignore
-└── Mechanic_Shop_API.postman_collection.json
