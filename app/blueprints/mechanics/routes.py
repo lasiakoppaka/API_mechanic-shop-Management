@@ -58,3 +58,34 @@ def delete_mechanic(id):
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': str(e)}), 400
+
+# GET MECHANICS BY TICKETS WORKED - GET /mechanics/by-tickets
+@mechanics_bp.route('/by-tickets', methods=['GET'])
+def get_mechanics_by_tickets():
+    """
+    Get all mechanics sorted by number of service tickets they've worked on (most to least)
+    """
+    from sqlalchemy import func
+    from app.models import mechanic_service
+    
+    # Query mechanics with count of tickets, ordered by count descending
+    mechanics_with_counts = db.session.query(
+        Mechanic,
+        func.count(mechanic_service.c.ticket_id).label('ticket_count')
+    ).outerjoin(
+        mechanic_service,
+        Mechanic.mechanic_id == mechanic_service.c.mechanic_id
+    ).group_by(
+        Mechanic.mechanic_id
+    ).order_by(
+        func.count(mechanic_service.c.ticket_id).desc()
+    ).all()
+    
+    # Format the response
+    result = []
+    for mechanic, count in mechanics_with_counts:
+        mechanic_data = mechanic_schema.dump(mechanic)
+        mechanic_data['tickets_worked'] = count
+        result.append(mechanic_data)
+    
+    return jsonify(result), 200

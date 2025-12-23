@@ -61,3 +61,60 @@ def remove_mechanic(ticket_id, mechanic_id):
     except Exception as e:
         db.session.rollback()
         return jsonify({'error': str(e)}), 400
+# EDIT TICKET - PUT /service-tickets/<ticket_id>/edit
+@service_tickets_bp.route('/<int:ticket_id>/edit', methods=['PUT'])
+def edit_service_ticket(ticket_id):
+    """
+    Add or remove mechanics from a service ticket
+    Accepts: { "add_ids": [1, 2], "remove_ids": [3] }
+    """
+    try:
+        ticket = ServiceTicket.query.get_or_404(ticket_id)
+        data = request.json
+        
+        # Get lists of mechanic IDs to add and remove
+        add_ids = data.get('add_ids', [])
+        remove_ids = data.get('remove_ids', [])
+        
+        # Add mechanics to ticket
+        for mechanic_id in add_ids:
+            mechanic = Mechanic.query.get(mechanic_id)
+            if mechanic and mechanic not in ticket.mechanics:
+                ticket.mechanics.append(mechanic)
+        
+        # Remove mechanics from ticket
+        for mechanic_id in remove_ids:
+            mechanic = Mechanic.query.get(mechanic_id)
+            if mechanic and mechanic in ticket.mechanics:
+                ticket.mechanics.remove(mechanic)
+        
+        db.session.commit()
+        return service_ticket_schema.jsonify(ticket), 200
+    
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 400
+
+# ADD PART TO TICKET - POST /service-tickets/<ticket_id>/add-part/<inventory_id>
+@service_tickets_bp.route('/<int:ticket_id>/add-part/<int:inventory_id>', methods=['POST'])
+def add_part_to_ticket(ticket_id, inventory_id):
+    """
+    Add an inventory item (part) to a service ticket
+    """
+    try:
+        from app.models import Inventory
+        
+        ticket = ServiceTicket.query.get_or_404(ticket_id)
+        part = Inventory.query.get_or_404(inventory_id)
+        
+        if part not in ticket.inventory_items:
+            ticket.inventory_items.append(part)
+            db.session.commit()
+            return service_ticket_schema.jsonify(ticket), 200
+        else:
+            return jsonify({'message': 'Part already added to this ticket'}), 200
+    
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 400
+

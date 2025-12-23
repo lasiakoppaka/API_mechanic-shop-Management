@@ -18,31 +18,6 @@ A RESTful API for managing a mechanic shop built with Flask, SQLAlchemy, and MyS
 - **MySQL** - Database
 - **Postman** - API testing
 
-## Project Structure
-```
-mechanic_shop_api/
-├── app/
-│   ├── __init__.py                 # Application factory
-│   ├── models.py                   # Database models
-│   └── blueprints/
-│       ├── customers/
-│       │   ├── __init__.py
-│       │   ├── routes.py          # Customer CRUD routes
-│       │   └── schemas.py         # Customer schemas
-│       ├── mechanics/
-│       │   ├── __init__.py
-│       │   ├── routes.py          # Mechanic CRUD routes
-│       │   └── schemas.py         # Mechanic schemas
-│       └── service_tickets/
-│           ├── __init__.py
-│           ├── routes.py          # Service ticket routes
-│           └── schemas.py         # Service ticket schemas
-├── venv/                           # Virtual environment (not in repo)
-├── run.py                          # Application entry point
-├── Mechanic_Shop_API.postman_collection.json
-└── README.md
-```
-
 ## Setup Instructions
 
 1. Install dependencies:
@@ -90,12 +65,6 @@ The API will be available at `http://127.0.0.1:5000`
 - `GET /service-tickets/` - Get all service tickets
 - `PUT /service-tickets/<ticket_id>/assign-mechanic/<mechanic_id>` - Assign a mechanic to a ticket
 - `PUT /service-tickets/<ticket_id>/remove-mechanic/<mechanic_id>` - Remove a mechanic from a ticket
-
-## Testing with Postman
-
-1. Import the Postman collection: `Mechanic_Shop_API.postman_collection.json`
-2. Make sure the Flask application is running
-3. Test each endpoint using the provided collection
 
 ## Database Schema
 
