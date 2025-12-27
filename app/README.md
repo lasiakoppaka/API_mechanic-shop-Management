@@ -95,6 +95,13 @@ The API will be available at `http://127.0.0.1:5000`
 - mechanic_id (Foreign Key)
 - ticket_id (Foreign Key)
 
+**Test Coverage:**
+- 84 total tests (all passing)
+- 18 customer tests (positive + negative scenarios)
+- 18 mechanic tests (positive + negative scenarios)
+- 29 service ticket tests (positive + negative scenarios)
+- 19 inventory tests (positive + negative scenarios)
+
 ## Author
 
 Lasia Koppaka
