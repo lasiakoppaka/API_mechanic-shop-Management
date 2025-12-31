@@ -45,7 +45,9 @@ def create_app(config_class=None):
         'contact': {
             'name': 'API Support',
             'email': 'support@mechanicshop.com'
-        }
+        },
+        'host': 'api-mechanic-shop-management.onrender.com',
+        'schemes': ['https']
     }
     
     # Initialize extensions with app
