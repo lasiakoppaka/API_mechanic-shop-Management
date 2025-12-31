@@ -23,13 +23,17 @@ cache = Cache(config={
     'CACHE_DEFAULT_TIMEOUT': 300
 })
 
-def create_app():
+def create_app(config_class=None):
     """Application factory function"""
     app = Flask(__name__)
     
-    # Configuration
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:40Lamonerie%40@localhost/mechanic_shop'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    # Load configuration from config class
+    if config_class:
+        app.config.from_object(config_class)
+    else:
+        # Fallback to hardcoded config for local development
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:40Lamonerie%40@localhost/mechanic_shop'
+        app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     
     # Swagger configuration
     app.config['SWAGGER'] = {
